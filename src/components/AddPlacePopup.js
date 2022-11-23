@@ -1,18 +1,17 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
 
+
 function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
-  const [imageName, setName] = React.useState("");
+  const [imageName, setName] = React.useState('');
   const [imageLink, setLink] = React.useState("");
 
   function handleChangeName(event) {
-    const text = event.target.value;
-    setName(text);
+    setName(event.target.value);
   }
 
   function handleChangeLink(event) {
-    const text = event.target.value;
-    setLink(text);
+    setLink(event.target.value);
   }
 
   function handleSubmit(event) {
@@ -22,6 +21,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       imageLink,
     });
   }
+  
 
   return (
     <PopupWithForm
@@ -41,6 +41,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
         maxLength="30"
         required
         className="popup__input popup__input_type_name"
+        value={imageName}
         onChange={handleChangeName}
       />
       <span id="imageName-error" className="popup__input-error"></span>
@@ -52,6 +53,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
         placeholder="Ссылка на картинку"
         required
         className="popup__input popup__input_type_job"
+        value={imageLink}
         onChange={handleChangeLink}
       />
       <span id="imageLink-error" className="popup__input-error"></span>

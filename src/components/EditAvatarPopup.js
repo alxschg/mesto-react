@@ -14,9 +14,9 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
 
     return (
     <PopupWithForm
-      name="avatar-popup"
-      title="Обновить аватар"
-      buttonText="Сохранить"
+      name={"avatar-popup"}
+      title={"Обновить аватар"}
+      buttonText={"Сохранить"}
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
