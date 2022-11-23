@@ -26,13 +26,13 @@ class Api {
         .then(res => this._checkResponse(res))
     }
 
-    editProfil(data){
+    editProfil({name, about}){
         return fetch(`${this._baseUrl}/users/me`, {
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify({
-                name: data.name,
-                about: data.aboutName
+                name,
+                about
             })
         })
         .then(res => this._checkResponse(res));
@@ -58,12 +58,12 @@ class Api {
             .then(res => this._checkResponse(res));
         }
     
-    editAvatar(data){
+    editAvatar(avatarLink){
         return fetch(`${this._baseUrl}/users/me/avatar`, {
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify({
-                avatar: data.avatarLink
+                avatar: avatarLink
             })
         })
         .then(res => this._checkResponse(res));
@@ -84,6 +84,14 @@ class Api {
         })
         .then(res => this._checkResponse(res));
     }
+
+    changeLikeCardStatus(idCard, isLiked) {
+        if (isLiked) {
+          return this.deleteLike(idCard);
+        } else {
+          return this.putLike(idCard);
+        }
+      }
     
   }
   

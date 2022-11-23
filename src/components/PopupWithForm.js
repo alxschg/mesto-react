@@ -1,4 +1,4 @@
-function PopupWithForm({ name, isOpen, title, onClose, children, buttonText }) {
+function PopupWithForm({ name, isOpen, title, onClose, children, buttonText, onSubmit }) {
   return (
     <div id={name} className={`popup ${isOpen ? `popup_is-opened` : ""}`}>
       <div className="popup__form">
@@ -9,7 +9,7 @@ function PopupWithForm({ name, isOpen, title, onClose, children, buttonText }) {
           aria-label="Закрыть"
           onClick={onClose}
         ></button>
-        <form name={name} noValidate className="form">
+        <form name={name} noValidate className="form" onSubmit={onSubmit}>
           <fieldset className="popup__fieldset">
             {children}
             <button

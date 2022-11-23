@@ -1,48 +1,32 @@
-import {useEffect, useState} from "react";
-import api from "../utils/Api";
+import { useContext } from "react";
 import Card from "./Card";
+import CurrentUserContext from "../contexts/CurrentUserContext";
 
 function Main(props) {
-  const [userAvatar, setUserAvatar] = useState("#");
-  const [userName, setUserName] = useState("");
-  const [userDescription, setUserDescription] = useState("");
-  const [cards, setCards] = useState([]);
+  const currentUser = useContext(CurrentUserContext);
 
-  useEffect(() => {
-    api
-      .getUserInfo()
-      .then((res) => {
-        setUserAvatar(res.avatar);
-        setUserName(res.name);
-        setUserDescription(res.about);
-      })
-      .catch((err) => console.error(err));
-
-    api
-      .getCards()
-      .then((res) => {
-        setCards(res);
-      })
-      .catch((err) => console.error(err));
-  }, []);
   return (
     <main className="content">
       <section className="profile">
         <div className="profile__card">
-          <img className="profile__avatar" src={userAvatar} alt="Аватарка" />
+          <img
+            className="profile__avatar"
+            src={currentUser.avatar}
+            alt="Аватарка"
+          />
           <button
             className="profile__avatar-button"
             onClick={props.onEditAvatar}
           ></button>
           <div className="profile__info">
-            <h1 className="profile__title">{userName}</h1>
+            <h1 className="profile__title">{currentUser.name}</h1>
             <button
               type="button"
               className="profile__edit-button"
               aria-label="Редактировать профиль"
               onClick={props.onEditProfile}
             ></button>
-            <p className="profile__description">{userDescription}</p>
+            <p className="profile__description">{currentUser.about}</p>
           </div>
         </div>
         <button
@@ -55,8 +39,14 @@ function Main(props) {
 
       <section className="elements">
         <ul className="elements__list">
-          {cards.map((card, id) => (
-            <Card card={card} key={id} onCardClick={props.onCardClick} />
+          {props.cards.map((card, id) => (
+            <Card
+              card={card}
+              key={id}
+              onCardClick={props.onCardClick}
+              onCardLike={props.onCardLike}
+              onCardDelete={props.onCardDelete}
+            />
           ))}
           ;
         </ul>
