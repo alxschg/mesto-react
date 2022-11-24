@@ -39,11 +39,11 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, cards, onCardClick, onCa
 
       <section className="elements">
         <ul className="elements__list">
-          {cards.map((card, id) => (
+          {cards.map((card) => (
             <Card
               card={card}
               likes={card.likes.length}
-              key={id}
+              key={card._id}
               onCardClick={onCardClick}
               onCardLike={onCardLike}
               onCardDelete={onCardDelete}

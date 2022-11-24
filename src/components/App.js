@@ -28,10 +28,7 @@ function App() {
   useEffect(() => {
     api
       .getCards()
-      .then((res) => {
-        setCards(res);
-      })
-      .catch((err) => console.error(err));
+      .then(setCards).catch(console.error);
   }, []);
 
   function handleEditAvatarClick() {
@@ -93,7 +90,7 @@ function App() {
 
     // Отправляем запрос в API и получаем обновлённые данные карточки
     api.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
-      setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
+      setCards((state) => state.map((c) => (c._id === card._id ? newCard : c))).catch(console.error);
     });
   }
 
@@ -103,9 +100,7 @@ function App() {
       .then(() => {
         setCards((items) => items.filter((c) => c._id !== card._id && c));
       })
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch(console.error);
   }
 
   return (

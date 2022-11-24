@@ -9,7 +9,7 @@ function PopupWithForm({ name, isOpen, title, onClose, children, buttonText, onS
           aria-label="Закрыть"
           onClick={onClose}
         ></button>
-        <form name={name} noValidate className="form" onSubmit={onSubmit}>
+        <form name={name} className="form" onSubmit={onSubmit}>
           <fieldset className="popup__fieldset">
             {children}
             <button
