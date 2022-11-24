@@ -20,6 +20,22 @@ function App() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
+  const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || selectedCard;
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    function closeByEscape(evt) {
+      if(evt.key === 'Escape') {
+        closeAllPopups();
+      }
+    }
+    if(isOpen) { // навешиваем только при открытии
+      document.addEventListener('keydown', closeByEscape);
+      return () => {
+        document.removeEventListener('keydown', closeByEscape);
+      }
+    }
+  }, [isOpen]) 
 
   useEffect(() => {
     api.getUserInfo().then(setCurrentUser).catch(console.error);
@@ -52,9 +68,11 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setSelectedCard(null);
+    setIsLoading(false);
   }
 
   function handleUpdateUser(userInfo) {
+    setIsLoading(true);
     api
       .editProfil(userInfo)
       .then((newUserInfo) => {
@@ -65,6 +83,7 @@ function App() {
   }
 
   function handleUpdateAvatar({ avatar }) {
+    setIsLoading(true);
     api
       .editAvatar(avatar)
       .then((newAvatar) => {
@@ -75,6 +94,7 @@ function App() {
   }
 
   function handleAddPlace(place) {
+    setIsLoading(true);
     api
       .addNewCard(place)
       .then((newCard) => {
@@ -122,18 +142,21 @@ function App() {
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
+          isLoading={isLoading}
         />
 
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
+          isLoading={isLoading}
         />
 
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlace}
+          isLoading={isLoading}
         />
 
         <PopupWithForm
